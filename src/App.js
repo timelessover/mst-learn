@@ -1,28 +1,20 @@
 import { observer } from "mobx-react";
 import * as React from "react";
-import { dataList } from "./models/TodoStore";
-import makeInspectable from 'mobx-devtools-mst';
+import { store } from "./models/TodoStore";
 
-const data = [{
-  name: 'xxx',
-  age: 123
-}, {
-  name: 'yyy',
-  age: 123
-}]
 
-const store = dataList.create({ items: data, count: 123 });
 
-makeInspectable(store);
+
+
 
 const App = (props) => {
   return (
     <>
-      <button onClick={()=>store.removeItem(store.items.length - 1)}>-</button>
-
-      <button onClick={()=>store.addItem({ name: 'xyz', age1: 18 })}>+</button>
+      {store.state === 'pending' ? 'loading...': '加载成功'}
+      <button onClick={()=>store.dereaseCount()}>-</button>
+      <button onClick={()=>store.fetchProjects()}>+</button>
       {store.items.map(item => <div>{item.name}</div>)}
-      {store.totalCount}
+      {store.count}
     </>
   )
 }
